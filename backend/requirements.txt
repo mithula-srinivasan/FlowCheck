@@ -1,0 +1,22 @@
+# Web Framework
+fastapi==0.120.0
+uvicorn[standard]==0.38.0
+python-multipart==0.0.6
+
+# Data & Math
+numpy==2.3.4
+scipy==1.16.2
+pydantic==2.12.3
+
+# Audio Processing
+librosa==0.10.2.post1
+soundfile==0.13.1
+webrtcvad==2.0.10
+
+# ML & AI
+openai-whisper==20250625
+scikit-learn==1.7.2
+joblib==1.5.2
+
+# NLP
+nltk==3.9.2

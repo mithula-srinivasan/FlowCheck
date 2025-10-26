@@ -1,0 +1,10 @@
+{
+    "python.defaultInterpreterPath": "/Users/dr.sobha/Desktop/stammer project/flowcheck/.venv/bin/python",
+    "python.analysis.extraPaths": [
+        "/Users/dr.sobha/Desktop/stammer project/flowcheck/.venv/lib/python3.13/site-packages"
+    ],
+    "python.analysis.autoSearchPaths": true,
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportMissingImports": "none"
+    }
+}
