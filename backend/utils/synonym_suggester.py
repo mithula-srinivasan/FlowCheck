@@ -3,7 +3,7 @@ from nltk.corpus import wordnet
 import re
 
 try:
-    wordnet.ensure_loaded()  # Check if WordNet is already available
+    wordnet.ensure_loaded()  # to check if wordnet is already available
 except LookupError:
     print("Downloading WordNet data (first time only, ~10MB)...")
     nltk.download('wordnet')

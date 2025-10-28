@@ -108,7 +108,7 @@ def contiguous_regions(flags: list[bool], frame_ms: int, sr: int, voiced=True):
     segs = []
     i = 0
     n = len(flags)
-    # [True, True, False, True, False, False, False, True]
+    
     while i < n:
         if flags[i] == voiced:
             j = i
@@ -200,7 +200,6 @@ def enhance_language(transcript: str, stammer_score: float):
     return {w: s for w, s in suggestions.items() if s}
 
 
-
 def detect_long_duration_words(transcript_segments):
     """Detect words that took unusually long to say (likely stuttered)"""
     difficult_words = []
@@ -223,38 +222,6 @@ def detect_long_duration_words(transcript_segments):
 
     print(f"Total long words found: {len(difficult_words)}")
     return difficult_words
-
-def detect_repetition_words(transcript_segments):
-    """Detect words with stutter patterns like 'ex-ex-ex-experience'"""
-    import re
-    difficult_words = []
-    
-    for segment in transcript_segments:
-        for word in segment.get("words", []):
-            word_text = word["word"].strip()
-            
-            # Pattern 1: Sound repetition "w-w-want", "ex-ex-ex-experience"
-            if re.match(r'^(\w)-\1-', word_text):
-                clean_word = re.sub(r'^(\w)-\1-', '', word_text).strip(",.?!\"':;").lower()
-                if clean_word and len(clean_word) > 3:
-                    difficult_words.append({
-                        "word": clean_word,
-                        "original": word_text,
-                        "reason": "sound_repetition"
-                    })
-            
-            # Pattern 2: Character repetition "wwwant"  
-            elif re.match(r'^(\w)\1\1+', word_text):
-                clean_word = re.sub(r'^(\w)\1\1+', '', word_text).strip(",.?!\"':;").lower()
-                if clean_word and len(clean_word) > 3:
-                    difficult_words.append({
-                        "word": clean_word, 
-                        "original": word_text,
-                        "reason": "character_repetition"
-                    })
-    
-    return difficult_words
-
 
 
 @app.post("/analyze", response_model=AnalysisResult)
@@ -332,19 +299,6 @@ async def analyze(file: UploadFile = File(...)):
     if long_duration_detected:
         for item in long_duration_detected:
             difficult_words.append(item["word"])
-
-    '''for pause in pauses:
-        if pause.duration_ms > 400:  # Only consider long pauses
-            pause_end = pause.end_s
-            for segment in transcript_segments:
-                for w in segment.get("words", []):
-                    if (
-                        w["start"] >= pause_end and 
-                        (w["start"] - pause_end) < 0.5 and
-                        w["word"].strip(",.?!").lower() not in {"uh", "um", "like", "and", "but", "so"}
-                    ):
-                        difficult_words.append(w["word"].strip(",.?!").lower())
-                        break '''
     
     print(difficult_words)
     difficult_words = list(set(difficult_words))

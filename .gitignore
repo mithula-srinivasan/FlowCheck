@@ -1,0 +1,17 @@
+# macOS + cache files
+.DS_Store
+__pycache__/
+*.pyc
+
+# Virtual environments
+.venv/
+venv/
+
+# Large model or audio artifacts
+*.wav
+*.mp3
+*.m4a
+*.pkl
+
+# Ignore derived or huge training data, but not the dataset folder
+data/tmp/
